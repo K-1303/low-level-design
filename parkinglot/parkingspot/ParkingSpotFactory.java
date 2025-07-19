@@ -3,14 +3,16 @@ package parkinglot.parkingspot;
 public class ParkingSpotFactory {
     public static ParkingSpot createParkingSpot(ParkingSpotType type, String spotId) {
         switch (type) {
-            case COMPACT:
+            case COMPACT -> {
                 return new CompactSpot(spotId);
-            case LARGE:
+            }
+            case LARGE -> {
                 return new LargeSpot(spotId);
-            case REGULAR:
+            }
+            case REGULAR -> {
                 return new RegularSpot(spotId);
-            default:
-                throw new IllegalArgumentException("Unknown parking spot type: " + type);
+            }
+            default -> throw new IllegalArgumentException("Unknown parking spot type: " + type);
         }
     }
 }
