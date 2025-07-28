@@ -12,8 +12,8 @@ public class Answer implements Votable, Commentable {
     private final Question question;
     private boolean isAccepted;
     private final Date creationDate;
-    private List<Comment> comments;
-    private List<Vote> votes;
+    private final List<Comment> comments;
+    private final List<Vote> votes;
 
     public Answer(User author, String content, Question question) {
         this.id = UUID.randomUUID().toString();
@@ -76,5 +76,9 @@ public class Answer implements Votable, Commentable {
 
     public boolean isAccepted() {
         return isAccepted;
+    }
+
+    public Date getCreationDate() {
+        return new Date(creationDate.getTime());
     }
 }
