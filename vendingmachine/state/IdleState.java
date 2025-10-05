@@ -1,9 +1,9 @@
-package vendingmachine.states;
+package vendingmachine.state;
 
-import vendingmachine.Coin;
+import vendingmachine.enums.Coin;
 import vendingmachine.VendingMachine;
 
-public class IdleState extends State {
+public class IdleState extends VendingMachineState {
     public IdleState(VendingMachine machine) {
         super(machine);
     }
@@ -15,11 +15,10 @@ public class IdleState extends State {
 
     @Override
     public void selectItem(String code) {
-        if(!machine.getInventory().isAvailable(code)) {
+        if (!machine.getInventory().isAvailable(code)) {
             System.out.println("Item not available.");
             return;
         }
-
         machine.setSelectedItemCode(code);
         machine.setState(new ItemSelectedState(machine));
         System.out.println("Item selected: " + code);

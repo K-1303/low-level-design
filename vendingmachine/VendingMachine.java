@@ -1,25 +1,27 @@
 package vendingmachine;
 
-import vendingmachine.states.*;
+import vendingmachine.entity.Inventory;
+import vendingmachine.entity.Item;
+import vendingmachine.enums.Coin;
+import vendingmachine.state.*;
 
 public class VendingMachine {
-    private static VendingMachine instance = new VendingMachine();
+    private final static VendingMachine INSTANCE = new VendingMachine();
     private final Inventory inventory = new Inventory();
-
-    private State currentState;
+    private VendingMachineState currentVendingMachineState;
     private int balance = 0;
     private String selectedItemCode;
 
     public VendingMachine() {
-        currentState = new IdleState(this);
+        currentVendingMachineState = new IdleState(this);
     }
 
     public static VendingMachine getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void insertCoin(Coin coin) {
-        currentState.insertCoin(coin);
+        currentVendingMachineState.insertCoin(coin);
     }
 
     public Item addItem(String code, String name, int price, int quantity) {
@@ -29,21 +31,20 @@ public class VendingMachine {
     }
 
     public void selectItem(String code) {
-        currentState.selectItem(code);
+        currentVendingMachineState.selectItem(code);
     }
 
     public void dispense() {
-        currentState.dispense();
+        currentVendingMachineState.dispense();
     }
 
     public void dispenseItem() {
         Item item = inventory.getItem(selectedItemCode);
-        if(balance >= item.getPrice()) {
+        if (balance >= item.getPrice()) {
             inventory.reduceStock(selectedItemCode);
             balance -= item.getPrice();
-            System.out.println("Dispensing item: " + item.getName());
-
-            if(balance > 0) {
+            System.out.println("Dispensed: " + item.getName());
+            if (balance > 0) {
                 System.out.println("Returning change: " + balance);
             }
         }
@@ -52,7 +53,7 @@ public class VendingMachine {
     }
 
     public void refundBalance() {
-        System.out.println("Refunding balance: " + balance);
+        System.out.println("Refunding: " + balance);
         balance = 0;
     }
 
@@ -73,15 +74,11 @@ public class VendingMachine {
         this.selectedItemCode = code;
     }
 
-    public void setState(State state) {
-        this.currentState = state;
+    public void setState(VendingMachineState vendingMachineState) {
+        this.currentVendingMachineState = vendingMachineState;
     }
 
-    public Inventory getInventory() {
-        return inventory;
-    }
-
-    public int getBalance() {
-        return balance;
-    }
+    // Getters for states and inventory
+    public Inventory getInventory() { return inventory; }
+    public int getBalance() { return balance; }
 }

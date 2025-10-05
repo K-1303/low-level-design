@@ -1,9 +1,9 @@
-package vendingmachine.states;
+package vendingmachine.state;
 
-import vendingmachine.Coin;
+import vendingmachine.enums.Coin;
 import vendingmachine.VendingMachine;
 
-public class ItemSelectedState extends State {
+public class ItemSelectedState extends VendingMachineState {
     public ItemSelectedState(VendingMachine machine) {
         super(machine);
     }
@@ -11,10 +11,10 @@ public class ItemSelectedState extends State {
     @Override
     public void insertCoin(Coin coin) {
         machine.addBalance(coin.getValue());
-        System.out.println("Coin inserted: " + coin.getValue());
+        System.out.println("Coin Inserted: " + coin.getValue());
         int price = machine.getSelectedItem().getPrice();
         if (machine.getBalance() >= price) {
-            System.out.println("Sufficient amount received.");
+            System.out.println("Sufficient money received.");
             machine.setState(new HasMoneyState(machine));
         }
     }

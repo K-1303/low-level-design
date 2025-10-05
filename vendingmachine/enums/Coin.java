@@ -1,4 +1,4 @@
-package vendingmachine;
+package vendingmachine.enums;
 
 public enum Coin {
     PENNY(1),

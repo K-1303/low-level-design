@@ -1,12 +1,12 @@
-package vendingmachine.states;
+package vendingmachine.state;
 
+import vendingmachine.enums.Coin;
 import vendingmachine.VendingMachine;
-import vendingmachine.Coin;
 
-public abstract class State {
-    public VendingMachine machine;
+public abstract class VendingMachineState {
+    VendingMachine machine;
 
-    State(VendingMachine machine) {
+    VendingMachineState(VendingMachine machine) {
         this.machine = machine;
     }
 

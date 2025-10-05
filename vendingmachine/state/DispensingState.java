@@ -1,21 +1,21 @@
-package vendingmachine.states;
+package vendingmachine.state;
 
-import vendingmachine.Coin;
+import vendingmachine.enums.Coin;
 import vendingmachine.VendingMachine;
 
-public class DispensingState extends State {
+public class DispensingState extends VendingMachineState {
     public DispensingState(VendingMachine machine) {
         super(machine);
     }
 
     @Override
     public void insertCoin(Coin coin) {
-        System.out.println("Currently Dispensing. Please wait.");
+        System.out.println("Currently dispensing. Please wait.");
     }
 
     @Override
     public void selectItem(String code) {
-        System.out.println("Currently Dispensing. Please wait.");
+        System.out.println("Currently dispensing. Please wait.");
     }
 
     @Override
@@ -25,6 +25,6 @@ public class DispensingState extends State {
 
     @Override
     public void refund() {
-        System.out.println("Cannot refund while dispensing. Please wait.");
+        System.out.println("Dispensing in progress. Refund not allowed.");
     }
 }

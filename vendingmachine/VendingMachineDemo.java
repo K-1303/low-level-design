@@ -1,5 +1,7 @@
 package vendingmachine;
 
+import vendingmachine.enums.Coin;
+
 public class VendingMachineDemo {
     public static void main(String[] args) {
         VendingMachine vendingMachine = VendingMachine.getInstance();
@@ -7,7 +9,7 @@ public class VendingMachineDemo {
         // Add products to the inventory
         vendingMachine.addItem("A1", "Coke", 25, 3);
         vendingMachine.addItem("A2", "Pepsi", 25, 2);
-        vendingMachine.addItem("B1", "Water", 10, 4);
+        vendingMachine.addItem("B1", "Water", 10, 5);
 
         // Select a product
         System.out.println("\n--- Step 1: Select an item ---");
@@ -34,6 +36,5 @@ public class VendingMachineDemo {
         // Try to dispense the product
         System.out.println("\n--- Step 6: Dispense and return change ---");
         vendingMachine.dispense();
-
     }
 }

@@ -1,9 +1,9 @@
-package vendingmachine.states;
+package vendingmachine.state;
 
-import vendingmachine.Coin;
+import vendingmachine.enums.Coin;
 import vendingmachine.VendingMachine;
 
-public class HasMoneyState extends State {
+public class HasMoneyState extends VendingMachineState {
     public HasMoneyState(VendingMachine machine) {
         super(machine);
     }
