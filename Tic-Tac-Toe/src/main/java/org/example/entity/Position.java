@@ -8,9 +8,4 @@ public class Position {
         this.row = row;
         this.col = col;
     }
-
-    @Override
-    public int hashCode() {
-        return 31 * row + col;
-    }
 }
