@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.entity.Board;
 import org.example.entity.Player;
 import org.example.state.GameState;
 import org.example.state.XTurnState;
@@ -15,8 +16,8 @@ public class GameContext {
         this.currentState = state;
     }
 
-    public void next(Player player, boolean hasWon) {
-        currentState.next(this, player, hasWon);
+    public void next(Player player, boolean hasWon, Board board) {
+        currentState.next(this, player, hasWon, board);
     }
 
     public  boolean isGameOver() {

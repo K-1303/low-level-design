@@ -2,20 +2,44 @@ package org.example.entity;
 
 import org.example.enums.Symbol;
 import org.example.GameContext;
+import org.example.observer.GameEventListener;
+import org.example.state.DrawState;
+import org.example.state.GameState;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private final int rows;
     private final int columns;
     private Symbol[][] grid;
+    private List<GameEventListener> listeners;
 
     public Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
         grid = new Symbol[rows][columns];
+        listeners = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 grid[i][j] = Symbol.EMPTY;
             }
+        }
+    }
+
+    public void addListener(GameEventListener listener) {
+        listeners.add(listener);
+    }
+
+    public void notifyMoveMade(Position position, Symbol symbol) {
+        for (GameEventListener listener : listeners) {
+            listener.onMoveMade(position, symbol);
+        }
+    }
+
+    public void notifyGameStateChanged(GameState state) {
+        for (GameEventListener listener : listeners) {
+            listener.onGameStateChanged(state);
         }
     }
 
@@ -26,6 +50,7 @@ public class Board {
 
     public void makeMove(Position pos, Symbol symbol) {
         grid[pos.row][pos.col] = symbol;
+        notifyMoveMade(pos, symbol);
     }
 
     private boolean isWinningLine(Symbol[] line) {
@@ -41,7 +66,7 @@ public class Board {
     public void checkGameState(GameContext context, Player currentPlayer) {
         for (int i = 0; i < rows; i++) {
             if (grid[i][0] != Symbol.EMPTY && isWinningLine(grid[i])) {
-                context.next(currentPlayer, true);
+                context.next(currentPlayer, true, this);
                 return;
             }
         }
@@ -51,7 +76,7 @@ public class Board {
                 column[j] = grid[j][i];
             }
             if (column[0] != Symbol.EMPTY && isWinningLine(column)) {
-                context.next(currentPlayer, true);
+                context.next(currentPlayer, true, this);
                 return;
             }
         }
@@ -62,13 +87,24 @@ public class Board {
             diagonal2[i] = grid[i][columns - 1 - i];
         }
         if (diagonal1[0] != Symbol.EMPTY && isWinningLine(diagonal1)) {
-            context.next(currentPlayer, true);
+            context.next(currentPlayer, true, this);
             return;
         }
         if (diagonal2[0] != Symbol.EMPTY && isWinningLine(diagonal2)) {
-            context.next(currentPlayer, true);
+            context.next(currentPlayer, true, this);
             return;
         }
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                if (grid[row][col] == Symbol.EMPTY) {
+                    return;
+                }
+            }
+        }
+
+        context.setState(new DrawState());
+        context.next(currentPlayer, true, this);
     }
 
     public void printBoard() {

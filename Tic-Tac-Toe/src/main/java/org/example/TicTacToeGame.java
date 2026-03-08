@@ -4,6 +4,7 @@ import org.example.entity.Board;
 import org.example.entity.Player;
 import org.example.entity.Position;
 import org.example.enums.Symbol;
+import org.example.observer.GameEventListener;
 import org.example.state.GameState;
 import org.example.state.OWonState;
 import org.example.state.XWonState;
@@ -17,8 +18,9 @@ public class TicTacToeGame implements BoardGames{
     private GameContext gameContext;
 
     public TicTacToeGame(PlayerStrategy xStrategy, PlayerStrategy oStrategy,
-                         int rows, int columns) {
+                         int rows, int columns, GameEventListener listener) {
         board = new Board(rows, columns);
+        board.addListener(listener);
         playerX = new Player(Symbol.X, xStrategy);
         playerO = new Player(Symbol.O, oStrategy);
         currentPlayer = playerX;
