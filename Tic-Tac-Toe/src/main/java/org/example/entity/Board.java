@@ -3,7 +3,6 @@ package org.example.entity;
 import org.example.enums.Symbol;
 import org.example.GameContext;
 import org.example.observer.GameEventListener;
-import org.example.state.DrawState;
 import org.example.state.GameState;
 
 import java.util.ArrayList;
@@ -94,17 +93,6 @@ public class Board {
             context.next(currentPlayer, true, this);
             return;
         }
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < columns; col++) {
-                if (grid[row][col] == Symbol.EMPTY) {
-                    return;
-                }
-            }
-        }
-
-        context.setState(new DrawState());
-        context.next(currentPlayer, true, this);
     }
 
     public void printBoard() {
