@@ -1,14 +1,41 @@
 package org.example.singleton;
 
 import org.example.entity.Cell;
+import org.example.factory.Piece;
 import org.example.factory.PieceFactory;
 
 public class Board {
     private static Board instance;
     private Cell[][] board;
+    private int size;
 
     private Board(int rows) {
         initializeBoard(rows);
+    }
+
+    // Get a specific cell by coordinates
+    public Cell getCell(int row, int col) {
+        if (row < 0 || row >= size || col < 0 || col >= size) {
+            return null;
+        }
+        return board[row][col];
+    }
+
+    // Convert algebraic notation (e.g., "a1") to Cell
+    public Cell getCellFromNotation(String notation) {
+        if (notation.length() != 2) {
+            throw new IllegalArgumentException("Invalid notation: " + notation);
+        }
+        char file = notation.charAt(0);
+        char rank = notation.charAt(1);
+
+        if (file < 'a' || file >= 'a' + size || rank < '1' || rank >= '1' + size) {
+            throw new IllegalArgumentException("Invalid notation: " + notation);
+        }
+        int col = file - 'a';
+        int row = size - (rank - '0');
+
+        return board[row][col];
     }
 
     // Method to get the single instance of Board
