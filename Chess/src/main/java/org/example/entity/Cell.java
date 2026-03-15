@@ -12,6 +12,14 @@ public class Cell {
         this.piece = piece;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
     public Piece getPiece() {
         return piece;
     }

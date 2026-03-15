@@ -1,4 +1,5 @@
 package org.example.entity;
+import org.example.factory.Piece;
 
 public class Move {
     private Cell startCell;
@@ -10,7 +11,18 @@ public class Move {
     }
 
     public boolean isValid() {
-        return !(startCell.getPiece().isWhite() == endCell.getPiece().isWhite());
+        Piece startPiece = startCell.getPiece();
+        Piece endPiece = endCell.getPiece();
+        
+        if (startPiece == null) {
+            return false;
+        }
+        
+        if (endPiece == null) {
+            return true;
+        }
+        
+        return startPiece.isWhite() != endPiece.isWhite();
     }
 
     public Cell getStartCell() {

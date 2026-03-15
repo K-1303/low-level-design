@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import org.example.entity.Cell;
 import org.example.entity.Move;
 import org.example.entity.Player;
@@ -7,9 +10,6 @@ import org.example.enums.Status;
 import org.example.factory.King;
 import org.example.factory.Piece;
 import org.example.singleton.Board;
-
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ChessGame {
     private Board board;
@@ -32,9 +32,10 @@ public class ChessGame {
     // Start the game
     public void start() {
         Scanner scanner = new Scanner(System.in);
+        displayBoard();
         while (this.status == Status.ACTIVE) {
             Player currentPlayer = isWhiteTurn ? player1 : player2;
-            System.out.println(currentPlayer.getName() + "'s turn (" + (currentPlayer.isWhiteSide() ? "White" : "Black") + ")");
+            System.out.println("\n" + currentPlayer.getName() + "'s turn (" + (currentPlayer.isWhiteSide() ? "White" : "Black") + ")");
 
             // Ask for source coordinates
             System.out.print("Enter source row and column (e.g., 6 4): ");
@@ -96,8 +97,56 @@ public class ChessGame {
                 move.getStartCell().setPiece(null);
                 // Toggling the turn
                 this.isWhiteTurn = !isWhiteTurn;
-                System.out.println(isWhiteTurn);
+                displayBoard();
+            } else {
+                System.out.println("Invalid move: Piece cannot move that way.");
             }
+        } else {
+            System.out.println("Invalid move: Cannot move to that cell.");
         }
+    }
+
+    // Display the current state of the board
+    private void displayBoard() {
+        System.out.println("\n  0 1 2 3 4 5 6 7");
+        System.out.println("  ---------------");
+        for (int row = 0; row < 8; row++) {
+            System.out.print(row + "|");
+            for (int col = 0; col < 8; col++) {
+                Cell cell = board.getCell(row, col);
+                if (cell.getPiece() == null) {
+                    System.out.print(". ");
+                } else {
+                    Piece piece = cell.getPiece();
+                    String symbol = getPieceSymbol(piece);
+                    if (piece.isWhite()) {
+                        System.out.print(symbol.toUpperCase() + " ");
+                    } else {
+                        System.out.print(symbol.toLowerCase() + " ");
+                    }
+                }
+            }
+            System.out.println("|" + row);
+        }
+        System.out.println("  ---------------");
+        System.out.println("  0 1 2 3 4 5 6 7\n");
+    }
+
+    // Get the symbol for a piece
+    private String getPieceSymbol(Piece piece) {
+        if (piece instanceof King) {
+            return "K";
+        } else if (piece instanceof org.example.factory.Queen) {
+            return "Q";
+        } else if (piece instanceof org.example.factory.Bishop) {
+            return "B";
+        } else if (piece instanceof org.example.factory.Knight) {
+            return "N";
+        } else if (piece instanceof org.example.factory.Rook) {
+            return "R";
+        } else if (piece instanceof org.example.factory.Pawn) {
+            return "P";
+        }
+        return "?";
     }
 }

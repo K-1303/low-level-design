@@ -1,7 +1,6 @@
 package org.example.singleton;
 
 import org.example.entity.Cell;
-import org.example.factory.Piece;
 import org.example.factory.PieceFactory;
 
 public class Board {
@@ -10,6 +9,7 @@ public class Board {
     private int size;
 
     private Board(int rows) {
+        this.size = rows;
         initializeBoard(rows);
     }
 
@@ -48,6 +48,7 @@ public class Board {
 
     // Initialize the board
     private void initializeBoard(int rows) {
+        this.size = rows;
         board = new Cell[rows][rows];
         // Setting White Pieces using PieceFactory
         setPieceRow(0, true);
