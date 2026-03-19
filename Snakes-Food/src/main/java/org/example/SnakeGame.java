@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.entity.Pair;
 import org.example.singleton.GameBoard;
 import org.example.strategy.HumanMovementStrategy;
 import org.example.strategy.MovementStrategy;

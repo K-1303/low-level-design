@@ -1,6 +1,6 @@
 package org.example.strategy;
 
-import org.example.entity.Pair;
+import org.example.Pair;
 
 public class AIMovementStrategy implements MovementStrategy {
     @Override
